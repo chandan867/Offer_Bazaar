@@ -124,21 +124,20 @@ class _MyAppState extends State<MyApp> {
               title: Text("K Coupon"),
             ),
             // body: ListWidget(),
-            body: (ElevatedButton(
-                onPressed: showNotification, child: const Text('click me'))),
-//             body: FutureBuilder<Listings>(
-//   future: listings,
-//   builder: (context, snapshot) {
-//     if (snapshot.hasData) {
-//       return Text(snapshot.data!.title);
-//     } else if (snapshot.hasError) {
-//       return Text('${snapshot.error}');
-//     }
-
-//     // By default, show a loading spinner.
-//     return const CircularProgressIndicator();
-//   },
-// ),
+            // body: (ElevatedButton(
+            //     onPressed: showNotification, child: const Text('click me'))),
+            body: FutureBuilder<List<Listings>>(
+              future: fetchListings(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  print(snapshot.runtimeType);
+                  //return Text((snapshot.data!.length).toString());
+                  return ListWidget(listings: snapshot.data ?? []);
+                } else {
+                  return Text('${snapshot.error}');
+                }
+              },
+            ),
           )
           //  body: ListWidget(listings: listings)),
           ),

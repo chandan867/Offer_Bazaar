@@ -1,10 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-//import 'package:share_plus/share_plus.dart';
 import 'package:test/utils/listings.dart';
-import 'package:test/utils/webService.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'category_drop.dart';
@@ -57,12 +54,15 @@ final List<Map<String, dynamic>> data = [
 // }
 
 class ListWidget extends StatefulWidget {
-//  final List<Listings> listings;
-  // ListWidget({
-  //  // required this.listings,
-  //    Key? key, required this.listings}) : super(key: key);
+  List<Listings> listings;
+  ListWidget(
+      {
+      // required this.listings,
+      Key? key,
+      required this.listings})
+      : super(key: key);
 
-  const ListWidget({Key? key}) : super(key: key);
+  // const ListWidget({Key? key}) : super(key: key);
   @override
   State<ListWidget> createState() => _ListWidgetState();
 }
@@ -159,6 +159,7 @@ class _ListWidgetState extends State<ListWidget> {
                       SizedBox(
                         height: 10,
                       ),
+                      Text(widget.listings[index].url)
                       //   Text(api_data[index].title),
                     ],
                   ),

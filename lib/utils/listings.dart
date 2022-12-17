@@ -17,13 +17,19 @@ class Listings {
       title: json['title'],
     );
   }
-  static Resource<List<Listings>> get all {
-    return Resource(
-        url: 'abc',
-        parse: (response) {
-          final result = json.decode(response.body);
-          Iterable list = result;
-          return list.map((model) => Listings.fromJson(model)).toList();
-        });
+  // static Resource<List<Listings>> get all {
+  //   return Resource(
+  //       url: 'abc',
+  //       parse: (response) {
+  //         final result = json.decode(response.body);
+  //         Iterable list = result;
+  //         return list.map((model) => Listings.fromJson(model)).toList();
+  //       });
+  // }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['url'] = url;
+    return data;
   }
 }
