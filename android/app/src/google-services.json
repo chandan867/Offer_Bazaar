@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1002241058917",
+    "project_id": "k-coupon",
+    "storage_bucket": "k-coupon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002241058917:android:1f797dad8ffc964a89be8c",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002241058917-hnc16hhl60va3gv7ke9k0dgn709do59m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9UFzMoagePy1JDthVc-P5NTDqc_gUQaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002241058917-hnc16hhl60va3gv7ke9k0dgn709do59m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
