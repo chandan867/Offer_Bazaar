@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:test/utils/listings.dart';
+import 'package:test/utils/webService.dart';
 import 'utils/listView.dart';
 
 void main() {
@@ -16,28 +18,51 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late List<Listings> listings;
+  //late Future<Listings> listings;
+
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      abc();
+    });
+  }
+
+  Future<void> abc() async {
+    // await Webservice().load(Listings.all).then((all_listings) {
+    //   listings = all_listings;
+    //   setState(() {});
+    // });
+    await Webservice().load(Listings.all);
+  }
+
   Widget build(BuildContext context) {
+    // abc();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 1,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("K Coupon"),
-            // bottom: const TabBar(tabs: [
-            //   Tab(icon: Icon(Icons.)),
-            //   // Tab(
-            //   //   icon: Icon(Icons.access_alarm),
-            //   // )
-            // ]),
+          length: 1,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text("K Coupon"),
+            ),
+            body: ListWidget(),
+//             body: FutureBuilder<Listings>(
+//   future: listings,
+//   builder: (context, snapshot) {
+//     if (snapshot.hasData) {
+//       return Text(snapshot.data!.title);
+//     } else if (snapshot.hasError) {
+//       return Text('${snapshot.error}');
+//     }
+
+//     // By default, show a loading spinner.
+//     return const CircularProgressIndicator();
+//   },
+// ),
+          )
+          //  body: ListWidget(listings: listings)),
           ),
-          body: TabBarView(children: [
-            ListWidget(const Icon(Icons.directions_bike)),
-            // ListWidget(const Icon(Icons.directions_walk_rounded))
-          ]),
-        ),
-      ),
     );
   }
 }

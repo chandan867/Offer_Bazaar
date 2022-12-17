@@ -1,66 +1,175 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:test/utils/listings.dart';
+import 'package:test/utils/webService.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ListWidget extends StatelessWidget {
-  Icon ic = const Icon(Icons.abc);
-  ListWidget(this.ic, {Key? key}) : super(key: key);
+import 'category_drop.dart';
+
+final List<String> category_list = ['travel', 'food', 'cloth'];
+
+final List<Map<String, dynamic>> data = [
+  {
+    "shop": "Abc",
+    "category": "food",
+    "url": "https://chandan867.github.io/Images/image1.png"
+  },
+  {
+    "shop": "Abcd",
+    "category": "travel",
+    "url": "https://chandan867.github.io/Images/image2.png"
+  },
+  {
+    "shop": "Abce",
+    "category": "food",
+    "url": "https://chandan867.github.io/Images/image3.jpg"
+  },
+  {
+    "shop": "Abcf",
+    "category": "cloth",
+    "url": "https://chandan867.github.io/Images/image1.png"
+  },
+  {
+    "shop": "Acgd",
+    "category": "hotel",
+    "url": "https://chandan867.github.io/Images/image2.png"
+  },
+  {
+    "shop": "tyup",
+    "category": "food",
+    "url": "https://chandan867.github.io/Images/image3.png"
+  },
+];
+//  late Future<List<Listings>> listings;
+//late List<Listings> listings_;
+//late final List<Listings> listings_last;
+//List<Listings> listings = [];
+
+// class ListWidget extends StatefulWidget {
+//   //final List<Listings> listings;
+//   ListWidget({Key? key}) : super(key: key);
+
+//   // fetch data from Api and insert into Listing Model
+
+// }
+
+class ListWidget extends StatefulWidget {
+//  final List<Listings> listings;
+  // ListWidget({
+  //  // required this.listings,
+  //    Key? key, required this.listings}) : super(key: key);
+
+  const ListWidget({Key? key}) : super(key: key);
+  @override
+  State<ListWidget> createState() => _ListWidgetState();
+}
+
+class _ListWidgetState extends State<ListWidget> {
+  List<Map<String, dynamic>> _selectedItems = [];
+  late List<Listings> api_data = [];
+  List<String> selected_category = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    _selectedItems = data;
+    // api_data = widget.listings;
+  }
+
+  void _showMultiSelect() async {
+    // a list of selectable items
+    // these items can be hard-coded or dynamically fetched from a database/API
+    final List<String> items = [
+      'food',
+      'travel',
+      'cloth',
+    ];
+
+    final List<String>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(items: items);
+      },
+    );
+
+    // Update UI
+    _selectedItems = [];
+
+    if (results != null) {
+      if (results.isEmpty) {
+        _selectedItems = data;
+      } else {
+        data.forEach(
+          (element) => {
+            if (results.contains(element["category"]))
+              {_selectedItems.add(element)}
+          },
+        );
+      }
+      // log(results.toString());
+
+      selected_category = results;
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<String> list = [
-      "https://chandan867.github.io/Images/image1.png",
-      "https://chandan867.github.io/Images/image2.png",
-      "https://chandan867.github.io/Images/image3.jpg",
-      "https://chandan867.github.io/Images/image1.png",
-      "https://chandan867.github.io/Images/image2.png",
-      "https://chandan867.github.io/Images/image3.jpg",
-      "https://chandan867.github.io/Images/image1.png",
-      "https://chandan867.github.io/Images/image2.png",
-      "https://chandan867.github.io/Images/image3.jpg",
-    ];
-    return ListView.builder(
-      itemCount: list.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              Image.network(list[index]),
-              Container(
-                padding: const EdgeInsets.all(6),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment
-                    .spaceEvenly, // use whichever suits your need
-                children: <Widget>[
-                  InkWell(
-                      child: const Icon(
-                        Icons.whatsapp,
-                        color: Color.fromRGBO(7, 94, 84, 15),
-                        //color: Color.fromARGB(255, 252, 87, 76),
-                        size: 40,
+    return Scaffold(
+        body: SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // use this button to open the multi-select dialog
+            ElevatedButton(
+              onPressed: _showMultiSelect,
+              child: const Text('Select Your Category'),
+            ),
+            const Divider(
+              height: 10,
+            ),
+            // display selected items
+            Wrap(
+              children: selected_category
+                  .map((e) => Chip(
+                        label: Text(e),
+                      ))
+                  .toList(),
+              spacing: 12,
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext ctx, int index) {
+                return Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: <Widget>[
+                      // error handle the image defualt
+                      Image.network(_selectedItems[index]['url']),
+                      const SizedBox(
+                        height: 10,
                       ),
-                      onTap: () async {
-                        _launchWhatsapp(context);
-                      }),
-                  InkWell(
-                      child: const Icon(
-                        Icons.call,
-                        color: Color.fromRGBO(0, 0, 255, 0.5),
-                        size: 40,
+                      Text(_selectedItems[index]['category']),
+                      SizedBox(
+                        height: 10,
                       ),
-                      onTap: () async {
-                        _makingPhoneCall(context);
-                      })
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+                      //   Text(api_data[index].title),
+                    ],
+                  ),
+                );
+              },
+              itemCount: _selectedItems.length,
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
 
