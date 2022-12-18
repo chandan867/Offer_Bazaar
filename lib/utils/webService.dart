@@ -26,7 +26,7 @@ import 'dart:developer';
 
 Future<List<Listings>> fetchListings() async {
   final response =
-      await http.get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+      await http.get(Uri.parse('http://65.2.8.254:8000/getoffers'));
 
   if (response.statusCode == 200) {
     final List result = json.decode(response.body);

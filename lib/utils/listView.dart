@@ -40,29 +40,10 @@ final List<Map<String, dynamic>> data = [
     "url": "https://chandan867.github.io/Images/image3.png"
   },
 ];
-//  late Future<List<Listings>> listings;
-//late List<Listings> listings_;
-//late final List<Listings> listings_last;
-//List<Listings> listings = [];
-
-// class ListWidget extends StatefulWidget {
-//   //final List<Listings> listings;
-//   ListWidget({Key? key}) : super(key: key);
-
-//   // fetch data from Api and insert into Listing Model
-
-// }
 
 class ListWidget extends StatefulWidget {
   List<Listings> listings;
-  ListWidget(
-      {
-      // required this.listings,
-      Key? key,
-      required this.listings})
-      : super(key: key);
-
-  // const ListWidget({Key? key}) : super(key: key);
+  ListWidget({Key? key, required this.listings}) : super(key: key);
   @override
   State<ListWidget> createState() => _ListWidgetState();
 }
@@ -73,7 +54,6 @@ class _ListWidgetState extends State<ListWidget> {
   List<String> selected_category = [];
   @override
   void initState() {
-    // TODO: implement initState
     _selectedItems = data;
     // api_data = widget.listings;
   }
@@ -159,13 +139,13 @@ class _ListWidgetState extends State<ListWidget> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(widget.listings[index].url)
+                      Text(widget.listings[index].name)
                       //   Text(api_data[index].title),
                     ],
                   ),
                 );
               },
-              itemCount: _selectedItems.length,
+              itemCount: widget.listings.length,
             ),
           ],
         ),

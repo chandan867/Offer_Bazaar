@@ -129,28 +129,33 @@ class _MyAppState extends State<MyApp> {
             body: FutureBuilder<List<Listings>>(
               future: fetchListings(),
               builder: (context, snapshot) {
+                print(snapshot.runtimeType);
                 if (snapshot.hasData) {
                   print(snapshot.runtimeType);
                   //return Text((snapshot.data!.length).toString());
                   return ListWidget(listings: snapshot.data ?? []);
                 } else {
-                  return Text('${snapshot.error}');
+                  print(snapshot.error);
+                  return Text('some error occured');
                 }
               },
             ),
+            bottomSheet: FloatingActionButton(
+              onPressed: showNotification,
+              child: const Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
           )
           //  body: ListWidget(listings: listings)),
           ),
     );
   }
-
-  // Future<void> abc() async {
-  //   // await Webservice().load(Listings.all).then((all_listings) {
-  //   //   listings = all_listings;
-  //   //   setState(() {});
-  //   // });
-  //   await Webservice().load(Listings.all);
-  // }
-
-  // showNotification() {}
 }
+
+// NULL ERROR HANDLING
+// PLACE HOLDER IMAGE
+//CODE CLEANING
