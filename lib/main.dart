@@ -140,15 +140,13 @@ class _MyAppState extends State<MyApp> {
                 }
               },
             ),
-            bottomSheet: FloatingActionButton(
-              onPressed: showNotification,
-              child: const Icon(
-                Icons.edit,
-                color: Colors.white,
-              ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+            // bottomSheet: FloatingActionButton(
+            //   onPressed: showNotification,
+            //   child: const Icon(
+            //     Icons.edit,
+            //     color: Colors.white,
+            //   ),
+            // ),
           )
           //  body: ListWidget(listings: listings)),
           ),

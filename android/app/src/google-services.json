@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1002241058917",
-    "project_id": "k-coupon",
-    "storage_bucket": "k-coupon.appspot.com"
+    "project_number": "239716970764",
+    "project_id": "offer-bazaar",
+    "storage_bucket": "offer-bazaar.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1002241058917:android:1f797dad8ffc964a89be8c",
+        "mobilesdk_app_id": "1:239716970764:android:538e7dce52b369c10ed929",
         "android_client_info": {
-          "package_name": "com.example.test"
+          "package_name": "com.chandandev.offerbazaar"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1002241058917-hnc16hhl60va3gv7ke9k0dgn709do59m.apps.googleusercontent.com",
+          "client_id": "239716970764-bjjjei9ue6op1hb1oqhjjjp0os3oc50t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC9UFzMoagePy1JDthVc-P5NTDqc_gUQaQ"
+          "current_key": "AIzaSyDP_yCLwa9bR5OJf3SsVDr1Qwt4Vr7XjUM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1002241058917-hnc16hhl60va3gv7ke9k0dgn709do59m.apps.googleusercontent.com",
+              "client_id": "239716970764-bjjjei9ue6op1hb1oqhjjjp0os3oc50t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

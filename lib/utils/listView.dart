@@ -49,12 +49,13 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
-  List<Map<String, dynamic>> _selectedItems = [];
-  late List<Listings> api_data = [];
+  // List<Map<String, dynamic>> _selectedItems = [];
+  List<Listings> _selectedItems = [];
+  // late List<Listings> api_data = [];
   List<String> selected_category = [];
   @override
   void initState() {
-    _selectedItems = data;
+    _selectedItems = widget.listings;
     // api_data = widget.listings;
   }
 
@@ -79,11 +80,11 @@ class _ListWidgetState extends State<ListWidget> {
 
     if (results != null) {
       if (results.isEmpty) {
-        _selectedItems = data;
+        _selectedItems = widget.listings;
       } else {
-        data.forEach(
+        widget.listings.forEach(
           (element) => {
-            if (results.contains(element["category"]))
+            if (results.contains(element.category))
               {_selectedItems.add(element)}
           },
         );
@@ -131,21 +132,60 @@ class _ListWidgetState extends State<ListWidget> {
                   child: Column(
                     children: <Widget>[
                       // error handle the image defualt
-                      Image.network(_selectedItems[index]['url']),
+                      Image.network(_selectedItems[index].imageURL),
+                      // Image.network(widget.listings[index].imageURL),
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(_selectedItems[index]['category']),
+                      // Text(widget.listings[index].category),
+
+                      Text(_selectedItems[index].name),
                       SizedBox(
                         height: 10,
                       ),
-                      Text(widget.listings[index].name)
+                      Text(_selectedItems[index].offer),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceEvenly, // use whichever suits your need
+                        children: <Widget>[
+                          InkWell(
+                              child: const Icon(
+                                Icons.whatsapp,
+                                color: Color.fromRGBO(7, 94, 84, 15),
+                                //color: Color.fromARGB(255, 252, 87, 76),
+                                size: 40,
+                              ),
+                              onTap: () async {
+                                _launchWhatsapp(context,
+                                    _selectedItems[index].whatsapp_number);
+                              }),
+                          InkWell(
+                              child: const Icon(
+                                Icons.call,
+                                color: Color.fromRGBO(0, 0, 255, 0.5),
+                                size: 40,
+                              ),
+                              onTap: () async {
+                                _makingPhoneCall(context,
+                                    _selectedItems[index].calling_number);
+                              })
+                        ],
+                      ),
                       //   Text(api_data[index].title),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(
+                        height: 5,
+                      ),
                     ],
                   ),
                 );
               },
-              itemCount: widget.listings.length,
+              itemCount: _selectedItems.length,
             ),
           ],
         ),
@@ -154,8 +194,8 @@ class _ListWidgetState extends State<ListWidget> {
   }
 }
 
-_launchWhatsapp(BuildContext context) async {
-  var whatsapp = "+917654962025";
+_launchWhatsapp(BuildContext context, String number) async {
+  var whatsapp = "+91" + number;
   var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
   if (await canLaunchUrl(whatsappAndroid)) {
     await launchUrl(whatsappAndroid);
@@ -168,8 +208,8 @@ _launchWhatsapp(BuildContext context) async {
   }
 }
 
-_makingPhoneCall(BuildContext context) async {
-  var url = Uri.parse("tel:+919549976671");
+_makingPhoneCall(BuildContext context, String number) async {
+  var url = Uri.parse("tel:+91$number");
   if (await canLaunchUrl(url)) {
     await launchUrl(url);
   } else {
