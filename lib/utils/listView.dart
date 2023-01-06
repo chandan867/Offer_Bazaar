@@ -127,59 +127,92 @@ class _ListWidgetState extends State<ListWidget> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext ctx, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(20),
+                return Card(
+                  elevation: 8.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular((10.0))),
                   child: Column(
-                    children: <Widget>[
-                      // error handle the image defualt
-                      Image.network(_selectedItems[index].imageURL),
-                      // Image.network(widget.listings[index].imageURL),
+                    children: [
                       const SizedBox(
-                        height: 10,
+                        height: 8.0,
                       ),
-                      // Text(widget.listings[index].category),
-
-                      Text(_selectedItems[index].name),
-                      SizedBox(
-                        height: 10,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        // child: Image.network(_selectedItems[index].imageURL),
+                        child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/loader.gif',
+                          image: _selectedItems[index].imageURL,
+                        ),
                       ),
-                      Text(_selectedItems[index].offer),
-                      SizedBox(
-                        height: 10,
+                      // Image.network(_selectedItems[index].imageURL,),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text(
+                          _selectedItems[index].name,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text(
+                          "${_selectedItems[index].offer}  off",
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment
-                            .spaceEvenly, // use whichever suits your need
-                        children: <Widget>[
-                          InkWell(
-                              child: const Icon(
-                                Icons.whatsapp,
-                                color: Color.fromRGBO(7, 94, 84, 15),
-                                //color: Color.fromARGB(255, 252, 87, 76),
-                                size: 40,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: ElevatedButton(
+                              onPressed: () => _launchWhatsapp(context,
+                                  _selectedItems[index].whatsapp_number),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.green)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.whatsapp,
+                                      color: Color.fromRGBO(7, 94, 84, 15),
+                                      size: 30,
+                                    ),
+                                    Text('WhatsApp')
+                                  ],
+                                ),
                               ),
-                              onTap: () async {
-                                _launchWhatsapp(context,
-                                    _selectedItems[index].whatsapp_number);
-                              }),
-                          InkWell(
-                              child: const Icon(
-                                Icons.call,
-                                color: Color.fromRGBO(0, 0, 255, 0.5),
-                                size: 40,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: ElevatedButton(
+                              onPressed: () => _makingPhoneCall(context,
+                                  _selectedItems[index].calling_number),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.blue)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.call,
+                                      color: Color.fromRGBO(0, 0, 255, 0.5),
+                                      size: 30,
+                                    ),
+                                    Text('Call')
+                                  ],
+                                ),
                               ),
-                              onTap: () async {
-                                _makingPhoneCall(context,
-                                    _selectedItems[index].calling_number);
-                              })
+                            ),
+                          )
                         ],
                       ),
-                      //   Text(api_data[index].title),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(
-                        height: 5,
+                      const SizedBox(
+                        height: 8.0,
                       ),
                     ],
                   ),
@@ -195,17 +228,19 @@ class _ListWidgetState extends State<ListWidget> {
 }
 
 _launchWhatsapp(BuildContext context, String number) async {
-  var whatsapp = "+91" + number;
-  var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
-  if (await canLaunchUrl(whatsappAndroid)) {
-    await launchUrl(whatsappAndroid);
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("WhatsApp is not installed on the device"),
-      ),
-    );
-  }
+  // var whatsapp = "+91" + number;
+  var whatsappUrl = "whatsapp://send?phone=${"+91$number"}";
+  // var whatsappAndroid = Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
+  await launchUrl(Uri.parse(whatsappUrl));
+  // if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
+  //   await launchUrl(Uri.parse(whatsappUrl));
+  // } else {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     const SnackBar(
+  //       content: Text("WhatsApp is not installed on the device"),
+  //     ),
+  //   );
+  // }
 }
 
 _makingPhoneCall(BuildContext context, String number) async {
@@ -220,3 +255,63 @@ _makingPhoneCall(BuildContext context, String number) async {
     );
   }
 }
+ // // return Padding(
+                //   padding: EdgeInsets.all(20),
+                //   child: Column(
+                //     children: <Widget>[
+                //       // error handle the image defualt
+                //       Image.network(_selectedItems[index].imageURL),
+                //       // Image.network(widget.listings[index].imageURL),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       // Text(widget.listings[index].category),
+
+                      // Text(_selectedItems[index].name),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       Text(_selectedItems[index].offer),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment
+                //             .spaceEvenly, // use whichever suits your need
+                //         children: <Widget>[
+                //           InkWell(
+                //               child: const Icon(
+                //                 Icons.whatsapp,
+                //                 color: Color.fromRGBO(7, 94, 84, 15),
+                //                 //color: Color.fromARGB(255, 252, 87, 76),
+                //                 size: 40,
+                //               ),
+                //               onTap: () async {
+                //                 _launchWhatsapp(context,
+                //                     _selectedItems[index].whatsapp_number);
+                //               }),
+                //           InkWell(
+                //               child: const Icon(
+                                // Icons.call,
+                                // color: Color.fromRGBO(0, 0, 255, 0.5),
+                                // size: 40,
+                //               ),
+                //               onTap: () async {
+                //                 _makingPhoneCall(context,
+                //                     _selectedItems[index].calling_number);
+                //               })
+                //         ],
+                //       ),
+                //       //   Text(api_data[index].title),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       const Divider(
+                //         height: 5,
+                //       ),
+                //     ],
+                //   ),
+                // );
+                       
+
+                     

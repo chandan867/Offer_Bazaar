@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
           length: 1,
           child: Scaffold(
             appBar: AppBar(
-              title: Text("K Coupon"),
+              title: Text("Offer Bazaar"),
             ),
             // body: ListWidget(),
             // body: (ElevatedButton(
@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
                   return ListWidget(listings: snapshot.data ?? []);
                 } else {
                   print(snapshot.error);
-                  return Text('some error occured');
+                  return Text('Loading data from Api....');
                 }
               },
             ),
