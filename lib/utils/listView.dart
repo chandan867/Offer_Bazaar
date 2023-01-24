@@ -2,44 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:test/utils/listings.dart';
+import 'package:test/utils/shop_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'category_drop.dart';
 
 final List<String> category_list = ['travel', 'food', 'cloth'];
-
-final List<Map<String, dynamic>> data = [
-  {
-    "shop": "Abc",
-    "category": "food",
-    "url": "https://chandan867.github.io/Images/image1.png"
-  },
-  {
-    "shop": "Abcd",
-    "category": "travel",
-    "url": "https://chandan867.github.io/Images/image2.png"
-  },
-  {
-    "shop": "Abce",
-    "category": "food",
-    "url": "https://chandan867.github.io/Images/image3.jpg"
-  },
-  {
-    "shop": "Abcf",
-    "category": "cloth",
-    "url": "https://chandan867.github.io/Images/image1.png"
-  },
-  {
-    "shop": "Acgd",
-    "category": "hotel",
-    "url": "https://chandan867.github.io/Images/image2.png"
-  },
-  {
-    "shop": "tyup",
-    "category": "food",
-    "url": "https://chandan867.github.io/Images/image3.png"
-  },
-];
 
 class ListWidget extends StatefulWidget {
   List<Listings> listings;
@@ -116,12 +84,12 @@ class _ListWidgetState extends State<ListWidget> {
             ),
             // display selected items
             Wrap(
+              spacing: 12,
               children: selected_category
                   .map((e) => Chip(
                         label: Text(e),
                       ))
                   .toList(),
-              spacing: 12,
             ),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
@@ -136,14 +104,32 @@ class _ListWidgetState extends State<ListWidget> {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        // child: Image.network(_selectedItems[index].imageURL),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/loader.gif',
-                          image: _selectedItems[index].imageURL,
+                      GestureDetector(
+                        onTap: () {
+                          // print("being tapped");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ShopDetails(
+                                      shopname: _selectedItems[index].name,
+                                      whatsapp:
+                                          _selectedItems[index].whatsapp_number,
+                                      calling:
+                                          _selectedItems[index].calling_number,
+                                      img: _selectedItems[index].imageURL,
+                                    )),
+                          );
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          // child: Image.network(_selectedItems[index].imageURL),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/loader.gif',
+                            image: _selectedItems[index].imageURL,
+                          ),
                         ),
                       ),
+
                       // Image.network(_selectedItems[index].imageURL,),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
