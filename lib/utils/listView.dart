@@ -117,6 +117,11 @@ class _ListWidgetState extends State<ListWidget> {
                                       calling:
                                           _selectedItems[index].calling_number,
                                       img: _selectedItems[index].imageURL,
+                                      rating: _selectedItems[index].rating,
+                                      numRatings:
+                                          _selectedItems[index].num_rating,
+                                      offerId: _selectedItems[index].offer_id,
+                                      //   description: _selectedItems[index].,
                                     )),
                           );
                         },
@@ -125,7 +130,7 @@ class _ListWidgetState extends State<ListWidget> {
                           // child: Image.network(_selectedItems[index].imageURL),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/loader.gif',
-                            image: _selectedItems[index].imageURL,
+                            image: _selectedItems[index].imageURL[0],
                           ),
                         ),
                       ),
