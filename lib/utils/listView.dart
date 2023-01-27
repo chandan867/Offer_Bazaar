@@ -162,7 +162,7 @@ class _ListWidgetState extends State<ListWidget> {
                                 child: Row(
                                   children: const [
                                     Icon(
-                                      Icons.whatsapp,
+                                      Icons.chat,
                                       color: Color.fromRGBO(7, 94, 84, 15),
                                       size: 30,
                                     ),
@@ -241,63 +241,3 @@ _makingPhoneCall(BuildContext context, String number) async {
     );
   }
 }
- // // return Padding(
-                //   padding: EdgeInsets.all(20),
-                //   child: Column(
-                //     children: <Widget>[
-                //       // error handle the image defualt
-                //       Image.network(_selectedItems[index].imageURL),
-                //       // Image.network(widget.listings[index].imageURL),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       // Text(widget.listings[index].category),
-
-                      // Text(_selectedItems[index].name),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Text(_selectedItems[index].offer),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment
-                //             .spaceEvenly, // use whichever suits your need
-                //         children: <Widget>[
-                //           InkWell(
-                //               child: const Icon(
-                //                 Icons.whatsapp,
-                //                 color: Color.fromRGBO(7, 94, 84, 15),
-                //                 //color: Color.fromARGB(255, 252, 87, 76),
-                //                 size: 40,
-                //               ),
-                //               onTap: () async {
-                //                 _launchWhatsapp(context,
-                //                     _selectedItems[index].whatsapp_number);
-                //               }),
-                //           InkWell(
-                //               child: const Icon(
-                                // Icons.call,
-                                // color: Color.fromRGBO(0, 0, 255, 0.5),
-                                // size: 40,
-                //               ),
-                //               onTap: () async {
-                //                 _makingPhoneCall(context,
-                //                     _selectedItems[index].calling_number);
-                //               })
-                //         ],
-                //       ),
-                //       //   Text(api_data[index].title),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       const Divider(
-                //         height: 5,
-                //       ),
-                //     ],
-                //   ),
-                // );
-                       
-
-                     

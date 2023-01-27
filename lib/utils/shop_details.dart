@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,11 +25,36 @@ class _ShopDetailsState extends State<ShopDetails> {
     return Scaffold(
         body: SafeArea(
             child: Column(children: [
-      const Text("welcome to ",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300)),
-      Text(widget.shopname,
-          style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w500)),
-      Image.network(widget.img),
+      Container(
+        height: 50,
+        child: Center(
+          child: Text(widget.shopname,
+              style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blueAccent)),
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.all(10.0),
+        child: CarouselSlider.builder(
+          itemCount: 5,
+          itemBuilder:
+              (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            // child: Image.network(_selectedItems[index].imageURL),
+            child: FadeInImage.assetNetwork(
+              placeholder: 'assets/loader.gif',
+              image: widget.img,
+            ),
+          ),
+          options: CarouselOptions(
+              enableInfiniteScroll: false,
+              animateToClosest: false,
+              viewportFraction: 1),
+        ),
+      ),
       Container(
         margin: const EdgeInsets.all(24.0),
         child: Row(
@@ -51,7 +77,7 @@ class _ShopDetailsState extends State<ShopDetails> {
                       child: Row(
                         children: const [
                           Icon(
-                            Icons.whatsapp,
+                            Icons.chat,
                             color: Color.fromRGBO(7, 94, 84, 15),
                             size: 30,
                           ),
