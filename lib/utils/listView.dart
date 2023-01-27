@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:test/utils/listings.dart';
-import 'package:test/utils/shop_details.dart';
+import 'package:test/utils/shop_details.dart' hide showDialog;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'category_drop.dart';

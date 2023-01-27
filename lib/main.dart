@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
           length: 1,
           child: Scaffold(
             appBar: AppBar(
-              title: Text("Offer Bazaar"),
+              title: const Text("Offer Bazaar"),
             ),
             // body: ListWidget(),
             // body: (ElevatedButton(

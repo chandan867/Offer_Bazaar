@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -132,30 +133,37 @@ class _ShopDetailsState extends State<ShopDetails> {
             fontWeight: FontWeight.w400,
             color: Colors.blue,
           )),
-      // Container(
-      //     margin: EdgeInsets.only(left: 50, top: 20, bottom: 10),
-      //     child: Row(
-      //       children: [
-      //         Text('Average rating' + "   " + widget.rating.toString()),
-      //         const Icon(Icons.star_border_purple500_outlined)
-      //       ],
-      //     )),
-      RatingBar.builder(
-        initialRating: widget.rating.toDouble(),
-        minRating: 1,
-        direction: Axis.horizontal,
-        allowHalfRating: true,
-        itemCount: 5,
-        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-        itemBuilder: (context, _) => Icon(
-          Icons.star,
-          color: Colors.amber,
-        ),
-        onRatingUpdate: (rating) {
-          http.post(Uri.parse('http://15.206.139.62:8000/getoffers'),
-              body: {"id": widget.offerId, "rating": rating.toString()});
+      ElevatedButton(
+        child: const Text('Give feedback'),
+        // onPressed: _showRatingDialog(context),
+        onPressed: () {
+          final _ratingDialog = Center(
+              child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: RatingDialog(
+              starSize: 20,
+              title: const Text("Feedback"),
+              message: const Text('Tell others what you think.'),
+              submitButtonText: 'Submit',
+              onCancelled: () => print('cancelled'),
+              onSubmitted: (response) async {
+                var res = await http
+                    .post(Uri.parse('http://15.206.139.62:8000/rate'), body: {
+                  "id": widget.offerId,
+                  "rating": response.rating.toString()
+                });
+                print(res);
+              },
+            ),
+          ));
+          showDialog(context: context, builder: (context) => _ratingDialog);
         },
-      )
+      ),
+      Text(
+        'Average rating: ${widget.rating}',
+        style: const TextStyle(
+            color: Colors.green, fontWeight: FontWeight.w300, fontSize: 30),
+      ),
     ])));
   }
 }
